@@ -4,6 +4,11 @@ const nextConfig = {
 	images: {
 		remotePatterns: discordRemotePatterns(["avatars", "icons"]),
 	},
+	experimental: {
+		serverActions: {
+		  allowedOrigins: ['*.app.github.dev', 'localhost:3000'],
+		},
+	  },
 };
 
 export default nextConfig;
