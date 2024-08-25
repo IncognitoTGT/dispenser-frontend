@@ -1,19 +1,21 @@
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Roboto } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 
-const sans = Roboto({
-	style: "normal",
-	weight: "400",
+const sans = Roboto_Flex({
 	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-	title: "Dispenser Dashboard",
-	description: "Nebula Link dispenser dashboard",
+	title: {
+		default: "Dispenser",
+		template: "Dispenser > %s",
+	},
+	description: "Dashboard for Nebula's link dispenser",
 };
 
 export default function RootLayout({
@@ -38,6 +40,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
+					<Toaster richColors theme="system" position="top-center" />
 					<TooltipProvider>{children}</TooltipProvider>
 				</ThemeProvider>
 			</body>
