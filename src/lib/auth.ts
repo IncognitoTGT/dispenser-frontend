@@ -11,6 +11,7 @@ import NextAuth, { type DefaultSession } from "next-auth";
 import Discord from "next-auth/providers/discord";
 import discordRest from "./discord";
 export const { auth, handlers, signIn, signOut } = NextAuth({
+	trustHost: true,
 	pages: {
 		signIn: "/auth/login",
 		signOut: "/auth/logout",
