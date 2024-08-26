@@ -3,17 +3,17 @@ import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function updateServerSettings(data: FormData) {
-	"use server";
+	const serverId = data.get("serverId")?.toString();
 	const logsWebhookUrl = data.get("logsWebhookUrl")?.toString();
 	const reportsWebhookUrl = data.get("reportsWebhookUrl")?.toString();
-	const serverId = data.get("serverId")?.toString() as string;
+	const usagePerUser = Number(data.get("usagePerUser")?.toString());
 	await prisma.serverSettings.update({
 		where: { serverId },
 		data: {
 			logsWebhookUrl,
 			reportsWebhookUrl,
-			reportsEnabled: Boolean(reportsWebhookUrl),
-			logsEnabled: Boolean(logsWebhookUrl),
+			usagePerUser,
+			updatedAt: new Date(),
 		},
 	});
 	revalidatePath(`/servers/${serverId}`);

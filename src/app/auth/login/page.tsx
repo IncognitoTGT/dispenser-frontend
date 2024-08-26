@@ -37,7 +37,7 @@ export default async function Login({
 						await signIn("discord");
 					}}
 				>
-					<SubmitButton variant="default" size="lg" className="font-bold">
+					<SubmitButton variant="default" size="lg">
 						<Discord className="size-4 mr-2 flex-shrink-0" />
 						Login with Discord
 					</SubmitButton>

@@ -2,7 +2,7 @@
 import type { server as Server } from "@prisma/client";
 import type { APIGuild } from "discord-api-types/v10";
 import type { LucideIcon } from "lucide-react";
-import { Badge, GlassWater, Group, LogOut, ServerIcon, Settings, SwatchBook, Users } from "lucide-react";
+import { Badge, GlassWater, Group, LinkIcon, LogOut, ServerIcon, Settings, SwatchBook, Users } from "lucide-react";
 import type { Session } from "next-auth";
 import { useTheme } from "next-themes";
 import { getImageProps } from "next/image";
@@ -61,6 +61,12 @@ export default function Navigation({
 			Icon: Settings,
 			label: "Settings",
 			href: "",
+		},
+
+		{
+			Icon: LinkIcon,
+			label: "Domains",
+			href: "/domains",
 		},
 		{
 			Icon: Group,

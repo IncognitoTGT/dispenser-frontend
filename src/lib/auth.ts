@@ -17,7 +17,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 		error: "/auth/error",
 	},
 	callbacks: {
-		signIn: async ({ account }) => account?.providerAccountId === process.env.OWNER_ID,
+		signIn: ({ account }) =>
+			account?.providerAccountId === process.env.OWNER_ID ||
+			Boolean(process.env.ALLOWED_USERS?.split(",").includes(account?.providerAccountId || "")),
 		async jwt({ token, account }) {
 			const id = account?.providerAccountId;
 			if (id) {
@@ -26,7 +28,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 					username: string;
 					avatar: string;
 				};
-				console.log(discordInfo);
 				const { avatar: image, username } = (await discordRest.get(Routes.user(id))) as APIUser;
 				token.image = `https://cdn.discordapp.com/avatars/${token.id}/${image}.png`;
 				token.username = username;
