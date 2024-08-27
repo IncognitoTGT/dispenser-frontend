@@ -1,3 +1,4 @@
+import { ClientDate } from "@/components/date";
 import InfoCard from "@/components/info-card";
 import { serversList } from "@/lib/cached";
 import type { serverSettings as ServerSettings } from "@prisma/client";
@@ -6,15 +7,14 @@ import { notFound } from "next/navigation";
 import { metadata } from "../metadata";
 import { GlobalForm, WebhookForm } from "./page.client";
 export default async function Page({ params }: { params: { id: string } }) {
-	const [selectedServer] =
-		(await serversList<
-			{
-				serverSettings: ServerSettings;
-			}[]
-		>({
-			include: { serverSettings: true },
-			where: { serverId: params.id },
-		})) || [];
+	const [selectedServer] = await serversList<
+		{
+			serverSettings: ServerSettings;
+		}[]
+	>({
+		include: { serverSettings: true },
+		where: { serverId: params.id },
+	});
 	if (!selectedServer) notFound();
 	return (
 		<div className="flex p-8 gap-4 flex-col">
@@ -27,15 +27,15 @@ export default async function Page({ params }: { params: { id: string } }) {
 				<InfoCard
 					Icon={PlusIcon}
 					heading="Created At"
-					description={selectedServer.serverSettings.createdAt.toLocaleDateString()}
-					subtext={selectedServer.serverSettings.createdAt.toLocaleTimeString()}
+					description={<ClientDate>{selectedServer.serverSettings.createdAt.toLocaleDateString()}</ClientDate>}
+					subtext={<ClientDate>{selectedServer.serverSettings.createdAt.toLocaleTimeString()}</ClientDate>}
 				/>
 				{selectedServer.serverSettings?.updatedAt ? (
 					<InfoCard
 						Icon={Pencil}
 						heading="Updated At"
-						description={selectedServer.serverSettings.updatedAt.toLocaleDateString()}
-						subtext={selectedServer.serverSettings.updatedAt.toLocaleTimeString()}
+						description={<ClientDate>{selectedServer.serverSettings.updatedAt.toLocaleDateString()}</ClientDate>}
+						subtext={<ClientDate>{selectedServer.serverSettings.updatedAt.toLocaleTimeString()}</ClientDate>}
 					/>
 				) : null}
 				<InfoCard

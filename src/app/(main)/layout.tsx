@@ -8,7 +8,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
 	return (
 		<>
 			<Navigation servers={await serversList()} session={session} />
-			<main className="ml-[178px] md:ml-[219px] lg:ml-[279px]">{children}</main>
+			<main className="ml-[178px] md:ml-[219px] lg:ml-[279px] overflow-x-clip">{children}</main>
 		</>
 	);
 }

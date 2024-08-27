@@ -1,7 +1,6 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ColumnDef } from "@tanstack/react-table";
-type r = ColumnDef<unknown>["header"];
 
 export const selectCell: ColumnDef<unknown> = {
 	id: "select",

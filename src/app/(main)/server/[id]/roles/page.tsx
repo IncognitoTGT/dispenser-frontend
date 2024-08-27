@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 	const roles = await rolesList({
 		where: { serverId: params.id },
 	});
-	if (!roles) return notFound();
+	if (roles.length <= 0) return notFound();
 	return (
 		<div className="flex p-8 gap-4 flex-col">
 			<h1 className="text-2xl font-bold">Roles</h1>
@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 			</div>
 			<hr />
 			<form
-				className="flex flex-col gap-2 w-full"
+				className="flex flex-col items-start justify-center gap-4"
 				action={async (data) => {
 					"use server";
 					const roleId = data.get("roleId")?.toString() as string;

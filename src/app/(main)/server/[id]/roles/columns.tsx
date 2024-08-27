@@ -3,6 +3,7 @@
 import { updateRoleSettings } from "@/actions/role";
 import { DataTableColumnHeader } from "@/components/data-table/col-header";
 import { selectCell } from "@/components/data-table/select-cell";
+import { ClientDate } from "@/components/date";
 import { SubmitButton } from "@/components/submit-button";
 import { buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -39,12 +40,20 @@ export const columns: Column[] = [
 	{
 		accessorKey: "createdAt",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-		cell: ({ cell }) => <span>{(cell.getValue() as Date).toLocaleString()}</span>,
+		cell: ({ cell }) => (
+			<ClientDate>
+				<span>{(cell.getValue() as Date).toLocaleString()}</span>
+			</ClientDate>
+		),
 	},
 	{
 		accessorKey: "updatedAt",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
-		cell: ({ cell }) => <span>{(cell.getValue() as Date).toLocaleString()}</span>,
+		cell: ({ cell }) => (
+			<ClientDate>
+				<span>{(cell.getValue() as Date).toLocaleString()}</span>
+			</ClientDate>
+		),
 	},
 	{
 		id: "actions",

@@ -5,6 +5,7 @@ import {
 	type ColumnDef,
 	type ColumnFiltersState,
 	type SortingState,
+	type Table as TableType,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -17,11 +18,12 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTablePagination } from "./pagination";
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	filterColumn?: string;
 	filterInputPlaceholder?: string;
+	FilterComponent?: (props: { table: TableType<TData> }) => React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -29,6 +31,7 @@ export function DataTable<TData, TValue>({
 	data,
 	filterColumn,
 	filterInputPlaceholder,
+	FilterComponent,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -60,6 +63,10 @@ export function DataTable<TData, TValue>({
 						onChange={(event) => table.getColumn(filterColumn)?.setFilterValue(event.target.value)}
 						className="max-w-sm"
 					/>
+				</div>
+			) : FilterComponent ? (
+				<div className="flex items-center py-4">
+					<FilterComponent table={table} />
 				</div>
 			) : null}
 			<div className="rounded-md border">
