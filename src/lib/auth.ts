@@ -25,10 +25,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 			const id = account?.providerAccountId;
 			if (id) {
 				token.id ||= id;
-				const discordInfo = (await discordRest.get(Routes.user(id))) as {
-					username: string;
-					avatar: string;
-				};
 				const { avatar: image, username } = (await discordRest.get(Routes.user(id))) as APIUser;
 				token.image = `https://cdn.discordapp.com/avatars/${token.id}/${image}.png`;
 				token.username = username;

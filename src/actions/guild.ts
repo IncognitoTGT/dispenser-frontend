@@ -16,5 +16,5 @@ export async function updateServerSettings(data: FormData) {
 			updatedAt: new Date(),
 		},
 	});
-	revalidatePath(`/servers/${serverId}`);
+	revalidatePath(`/server/${serverId}`);
 }

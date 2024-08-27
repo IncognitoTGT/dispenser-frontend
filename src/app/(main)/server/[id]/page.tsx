@@ -24,14 +24,12 @@ export default async function Page({ params }: { params: { id: string } }) {
 			</div>
 			<hr />
 			<section className="flex flex-row gap-2 flex-wrap">
-				{selectedServer.serverSettings?.createdAt ? (
-					<InfoCard
-						Icon={PlusIcon}
-						heading="Created At"
-						description={selectedServer.serverSettings.createdAt.toLocaleDateString()}
-						subtext={selectedServer.serverSettings.createdAt.toLocaleTimeString()}
-					/>
-				) : null}
+				<InfoCard
+					Icon={PlusIcon}
+					heading="Created At"
+					description={selectedServer.serverSettings.createdAt.toLocaleDateString()}
+					subtext={selectedServer.serverSettings.createdAt.toLocaleTimeString()}
+				/>
 				{selectedServer.serverSettings?.updatedAt ? (
 					<InfoCard
 						Icon={Pencil}
@@ -40,7 +38,6 @@ export default async function Page({ params }: { params: { id: string } }) {
 						subtext={selectedServer.serverSettings.updatedAt.toLocaleTimeString()}
 					/>
 				) : null}
-
 				<InfoCard
 					Icon={UserSearch}
 					heading="Dispense limit per user"
