@@ -9,5 +9,5 @@ export const middleware = auth(async (req) => {
 	return NextResponse.redirect(url);
 });
 export const config = {
-	matcher: ["/((?!_next/static|_next/image|icon.svg|api|manifest.webmanifest).*)"],
+	matcher: ["/((?!_next/static|_next/image|icon.svg|api/auth|manifest.webmanifest).*)"],
 };

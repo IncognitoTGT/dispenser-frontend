@@ -1,24 +1,21 @@
 "use client";
 
-import { updateRoleSettings } from "@/actions/role";
+import { deleteRole, updateRoleSettings } from "@/actions/role";
 import { DataTableColumnHeader } from "@/components/data-table/col-header";
-import { selectCell } from "@/components/data-table/select-cell";
 import { ClientDate } from "@/components/date";
 import { SubmitButton } from "@/components/submit-button";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { role as Role } from "@prisma/client";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { APIRole } from "discord-api-types/v10";
 import { MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 type Column = ColumnDef<Role & APIRole>;
 export const columns: Column[] = [
-	selectCell as Column,
 	{
 		accessorKey: "roleId",
 		header: "ID",
@@ -82,23 +79,39 @@ export const columns: Column[] = [
 							})
 						}
 					>
-						<Label htmlFor="specialLimit" className="flex flex-row items-center gap-2">
+						<Label htmlFor="specialLimite" className="flex flex-row items-center gap-2">
 							Special Limit <span className="text-xs text-muted-foreground">(Leave empty for default)</span>
 						</Label>
 						<Input
 							type="number"
-							id="specialLimit"
+							id="specialLimite"
 							name="specialLimit"
 							defaultValue={row.original.specialLimit || undefined}
 						/>
 						<Label htmlFor="adminRole" className="flex flex-row items-center gap-2">
 							<Checkbox id="adminRole" name="adminRole" defaultChecked={Boolean(row.original.adminRole)} />
-							Admin
+							Admin <span className="text-muted-foreground text-xs">(bot restart required)</span>
 						</Label>
 						<input readOnly hidden name="roleId" value={row.original.roleId} />
 						<input readOnly hidden name="serverId" value={row.original.serverId} />
-
-						<SubmitButton>Save</SubmitButton>
+						<div className="w-full flex flex-row gap-2">
+							<SubmitButton className="w-full">Save</SubmitButton>
+							<Button
+								variant="destructive"
+								className="w-full"
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									toast.promise(() => deleteRole(row.original.roleId), {
+										loading: "Deleting...",
+										success: "Role deleted",
+										error: "Failed to delete role",
+									});
+								}}
+							>
+								Delete
+							</Button>
+						</div>
 					</form>
 				</DialogContent>
 			</Dialog>
